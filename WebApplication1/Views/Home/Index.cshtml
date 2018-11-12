@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div>
+    <img src="~/Content/Images/logo_color.png" style="height:120px;width:160px;padding-left:50px" />
+    <h2 style="color:purple">Explore The World!</h2>
+    <h2>Shop Products From Abroad, Delivered to you by Travelers.</h2>
+</div>
+<form method="get" action="/Admin/Login">
+    <button style="background-color:purple; color:white;width:400px;height:40px"><b>Admin Login</b></button>
+</form>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 25%;
+            margin-bottom: 16px;
+            padding: 0 20px;
+        }
+
+        .card {
+            box-shadow: 0 12px 20px 0 rgb(128, 128, 128);
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+            .container::after, .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+        .title {
+            color: black;
+        }
+
+        .footer {
+            font-weight: bold;
+            font-size: 20px;
+            width: 50%;
+            height: 25%;
+            color: black;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <center><h3>Recent Completed Orders</h3></center>
+    <br>
+
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/o1.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> Luxury Watch </h2>
+                    <p class="title">Dubai</p>
+                    <p>Traveller : Bilal</p>
+                    <p>Buyer : Abdullah</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/o2.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> IPhone xs </h2>
+                    <p class="title">Dubai</p>
+                    <p>Traveller : Bilal</p>
+                    <p>Buyer : Abdullah</p>>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/beer.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> Beer </h2>
+                    <p class="title">Dubai</p>
+                    <p>Traveller : Bilal</p>
+                    <p>Buyer : Abdullah</p>>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/o3.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> K K Donuts </h2>
+                    <p class="title">Dubai</p>
+                    <p>Traveller : Bilal</p>
+                    <p>Buyer : Abdullah</p>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <center><h3>Reviews &amp; Feedbacks</h3></center>
+    <br>
+
+    <div class="row">
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/f1.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> Numair </h2>
+
+                    <p>Easy to use &amp; reliable</p>
+                    <p>You guys are just Great!</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/f2.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> Sohaib </h2>
+
+                    <p>Easy to use &amp; reliable</p>
+                    <p>You guys are just Great!</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/f3.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> Sohail </h2>
+
+                    <p>Easy to use &amp; reliable</p>
+                    <p>You guys are just Great!</p>
+
+                </div>
+            </div>
+        </div>
+        <div class="column">
+            <div class="card">
+                <img src="~/Content/Images/boy.jpg" style="width:80%;height:300px">
+                <div class="container">
+                    <h2> Haider </h2>
+
+                    <p>Easy to use &amp; reliable</p>
+                    <p>You guys are just Great!</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
