@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ZipShip.Models.TripViewModel>
+
+@{
+    ViewBag.Title = "Filtered";
+}
+
+<head>
+    <style>
+
+        body {
+            background-image: url('/Content/Images/trips.jpg');
+            position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .text {
+            color: white;
+        }
+
+        .h1, h2, h3 {
+            color: white;
+        }
+    </style>
+</head>
+<body class="text">
+    <h2>Filtered Trips</h2>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AddedBy)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Country)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddedBy)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Country)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+
+
+
+            </tr>
+        }
+
+    </table>
+    <br />
+    <br />
+    <center>
+        
+        <div style="padding-right:100px">Country Name <input type="text" style="color:black;width:300px;height:40px" /></div>
+        <br />
+        <div class="form-group">
+            <a href="~/Trips/Filtered" class="btn btn-default" style="background-color:purple;color:white;width:280px;height:40px"><b class="pt-3">Filter</b></a>
+        </div>
+        <div class="form-group">
+            <a href="~/Account/Index" class="btn btn-default" style="background-color:purple;color:white;width:280px;height:40px"><b class="pt-3">My Account</b></a>
+        </div>
+    </center>
+</body>

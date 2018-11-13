@@ -1,0 +1,88 @@
+﻿@model IEnumerable<ZipShip.Models.AdminDashboardViewModel>
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<head>
+    <style>
+
+        body {
+            background-image: url('/Content/Images/signup.jpg');
+            position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .text {
+            color: white;
+        }
+        .h1, h2, h3 {
+            color: white;
+        }
+
+    </style>
+</head>
+<body class="text">
+
+
+    <h2>Dashboard</h2>
+
+    
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Shopper)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Traveller)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Status)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ZipShipEarning)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Shopper)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Traveller)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ZipShipEarning)
+                </td>
+                <td>
+                    |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div style="padding-left:390px">
+        <div class="form-group">
+            <a href="~/Admin/Edit" class="btn btn-default" style="background-color:purple;color:white;width:330px;height:40px"><b class="pt-3">Edit Info</b></a>
+        </div>
+        <div class="form-group">
+            <a href="/Admin/RegisteredUsers" class="btn btn-default" style="background-color:purple;color:white;width:330px;height:40px"><b class="pt-3">Registered Users</b></a>
+        </div>
+        <div class="form-group">
+            <a href="~/Home/Index" class="btn btn-default" style="background-color:purple;color:white;width:330px;height:40px"><b class="pt-3">Logout</b></a>
+        </div>
+    </div>
+</body>
