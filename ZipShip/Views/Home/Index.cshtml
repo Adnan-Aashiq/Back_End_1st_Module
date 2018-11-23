@@ -1,14 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div>
-    <img src="~/Content/Images/logo_color.png" style="height:120px;width:160px;padding-left:50px" />
-    <h2 style="color:purple">Explore The World!</h2>
-    <h2>Shop Products From Abroad, Delivered to you by Travelers.</h2>
-</div>
-<form method="get" action="/Admin/Login">
-    <button style="background-color:purple;color:white;width:400px;height:40px"><b>Admin Login</b></button>
-</form>
+
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,6 +11,16 @@
             box-sizing: border-box;
         }
 
+        a:hover {
+            background-color:transparent;
+            color:black;
+            border-color:purple;
+        }
+
+        a {
+            color: white;
+            background-color: purple;
+        }
         *, *:before, *:after {
             box-sizing: inherit;
         }
@@ -62,6 +65,17 @@
     </style>
 </head>
 <body class="text">
+    <div>
+        <img src="~/Content/Images/logo_color.png" style="height:120px;width:160px;padding-left:50px" />
+        <h2 style="color:purple">Explore The World!</h2>
+        <h2>Shop Products From Abroad, Delivered to you by Travelers.</h2>
+    </div>
+
+
+    <div class="form-group">
+        <a href="~/Admin/Login" class="btn" style=" width:400px;height:40px"><b class="pt-3">Admin Login</b></a>
+    </div>
+    
 
     <center><h3>Recent Completed Orders</h3></center>
     <br>

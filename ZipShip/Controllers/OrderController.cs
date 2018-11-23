@@ -14,8 +14,26 @@ namespace ZipShip.Controllers
         public ActionResult Index()
         {
             
+            DBZipShipEntities db = new DBZipShipEntities();
+            var orders = db.Orders.ToList();
+            List<OrderViewModel> list = new List<OrderViewModel>();
+            foreach(var i in orders)
+            {
+                OrderViewModel o = new OrderViewModel();
+                o.Id = i.Id;
+                o.Name = i.Name;
+                o.Quantity = i.Quantity;
+                o.Price =Convert.ToDouble(i.Price);
+                o.DealPrice = Convert.ToDouble(i.DealPrice);
+                o.AddedBy = i.AddedBy;
+                if(o.AddedBy != User.Identity.GetUserId())
+                {
+                    list.Add(o);
+                }
+                
+            }
             
-            return View();
+            return View(list);
         }
 
         public ActionResult SelectedOrder()
@@ -23,27 +41,56 @@ namespace ZipShip.Controllers
 
             DBZipShipEntities db = new DBZipShipEntities();
             string personID = User.Identity.GetUserId();
-            Deal deal = db.Deals.Where(x => x.SelectedBy == personID).First();
-            int order_id =Convert.ToInt16(deal.OrderId);
-
-            Order order = db.Orders.Where(x=>x.Id == order_id).First();
-            OrderViewModel o = new OrderViewModel();
-             
-            o.Name = order.Name;
-            o.Quantity = order.Quantity;
-            o.Price = Convert.ToDouble(order.Price);
-            o.DealPrice = Convert.ToDouble(order.DealPrice);
-            o.AddedBy = order.AddedBy;
-                
+            var deals = db.Deals.ToList();
+            List<int> list = new List<int>();
+            foreach (Deal d in deals)
+            {
+                if(d.SelectedBy == personID)
+                {
+                    int i = Convert.ToInt16(d.OrderId);
+                    list.Add(i);
+                }
+            }
+            List<OrderViewModel> listOfOrders = new List<OrderViewModel>();
+            var AllOrders = db.Orders.ToList();
+            foreach(var v in AllOrders)
+            {
+                foreach(int a in list)
+                {
+                    if(v.Id == a)
+                    {
+                        OrderViewModel o = new OrderViewModel();
+                        o.Name = v.Name;
+                        o.Quantity = v.Quantity;
+                        o.Price = Convert.ToDouble(v.Price);
+                        o.DealPrice = Convert.ToDouble(v.DealPrice);
+                        o.AddedBy = v.AddedBy;
+                        listOfOrders.Add(o);
+                    }
+                }
+            }
             
-
-            return View(o);
+        
+            return View(listOfOrders);
         }
         // GET: Order/MyList
         public ActionResult MyList()
         {
-            
-            return View();
+            DBZipShipEntities db = new DBZipShipEntities();
+            string personID = User.Identity.GetUserId();
+            var orders = db.Orders.Where(x => x.AddedBy == personID);
+            List<OrderViewModel> list = new List<OrderViewModel>();
+            foreach (var i in orders)
+            {
+                OrderViewModel o = new OrderViewModel();
+                o.Id = i.Id;
+                o.Name = i.Name;
+                o.Quantity = i.Quantity;
+                o.Price = Convert.ToDouble(i.Price);
+                o.DealPrice = Convert.ToDouble(i.DealPrice);
+                list.Add(o);
+            }
+            return View(list);
         }
 
         // GET: Order/Details/5
@@ -74,7 +121,17 @@ namespace ZipShip.Controllers
             try
             {
                 // TODO: Add insert logic here
-                return View();
+                DBZipShipEntities db = new DBZipShipEntities();
+                Order o = new Order();
+                o.Name = collection.Name;
+                o.Quantity = collection.Quantity;
+                o.Price =Convert.ToInt64(collection.Price);
+                o.DealPrice =Convert.ToInt64(collection.DealPrice);
+                o.AddedBy = User.Identity.GetUserId();
+                o.AddedOn = DateTime.Now;
+                db.Orders.Add(o);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -85,23 +142,45 @@ namespace ZipShip.Controllers
         // GET: Order/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            DBZipShipEntities db = new DBZipShipEntities();
+            OrderViewModel user = new OrderViewModel();
+            foreach (Order p in db.Orders)
+            {
+                if (id == p.Id)
+                {
+                    user.Name = p.Name;
+                    user.Quantity = p.Quantity;
+                    user.Price =Convert.ToInt16(p.Price);
+                    user.DealPrice = Convert.ToInt16(p.DealPrice);
+                    
+                    break;
+                }
+            }
+            return View(user);
         }
 
         // POST: Order/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, OrderViewModel collection)
         {
-            try
+            // TODO: Add update logic here
+            DBZipShipEntities db = new DBZipShipEntities();
+            OrderViewModel user = new OrderViewModel();
+            foreach (Order p in db.Orders)
             {
-                // TODO: Add update logic here
+                if (p.Id == id)
+                {
 
-                return RedirectToAction("Index");
+                    p.Name = collection.Name;
+                    p.Quantity = collection.Quantity;
+                    p.Price = Convert.ToInt16(collection.Price);
+                    p.DealPrice = Convert.ToInt16(collection.DealPrice);
+                    
+                    break;
+                }
             }
-            catch
-            {
-                return View();
-            }
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
 
@@ -117,7 +196,7 @@ namespace ZipShip.Controllers
             d.SelectedBy = User.Identity.GetUserId();
             db.Deals.Add(d);
             db.SaveChanges();
-            return RedirectToAction("SelectedOrder");
+            return View();
             
         }
 
@@ -134,7 +213,33 @@ namespace ZipShip.Controllers
             try
             {
                 // TODO: Add delete logic here
+                DBZipShipEntities db = new DBZipShipEntities();
+                var order = db.Deals.Where(x => x.OrderId == id);
+                db.Entry(order).State = System.Data.Entity.EntityState.Deleted;
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
+        // GET: Order/DeleteOrder/5
+        public ActionResult DeleteOrder(int id)
+        {
+            return View();
+        }
+
+        // POST: Order/DeleteOrder/5
+        [HttpPost]
+        public ActionResult DeleteOrder(int id, FormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
+                DBZipShipEntities db = new DBZipShipEntities();
+                var order = db.Orders.Where(x => x.Id == id);
+                db.Entry(order).State = System.Data.Entity.EntityState.Deleted;
                 return RedirectToAction("Index");
             }
             catch

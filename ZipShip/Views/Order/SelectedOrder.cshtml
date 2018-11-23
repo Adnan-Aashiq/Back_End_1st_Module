@@ -27,7 +27,7 @@
 
 
     <table class="table">
-        <tr>
+        <tr class="text">
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -51,7 +51,7 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr class="text">
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -74,7 +74,14 @@
                     <a href="/Order/Delete/@item.Id" class="btn btn-default" style="background-color:purple;color:white;width:180px;height:40px">Delete</a>
                 </td>
             </tr>
+
         }
 
+
     </table>
+    <center>
+        <div class="form-group">
+            <a href="~/Account/Index" class="btn btn-default" style="background-color:purple;color:white;width:330px;height:40px"><b class="pt-3">My Account</b></a>
+        </div>
+    </center>
 </body>

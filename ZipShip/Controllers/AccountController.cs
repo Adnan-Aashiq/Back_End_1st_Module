@@ -68,8 +68,94 @@ namespace ZipShip.Controllers
             return View();
         }
 
-        
-        
+        // GET: Account/Edit/5
+        public ActionResult Edit()
+        {
+            string id = User.Identity.GetUserId();
+            DBZipShipEntities db = new DBZipShipEntities();
+            UserViewModel user = new UserViewModel();
+            foreach(AspNetUser p in db.AspNetUsers)
+            {
+                if(p.Id == id)
+                {
+                    user.Name = p.Name;
+                    user.Email = p.Email;
+                    user.Address = p.Address;
+                    user.CNIC = p.CNIC;
+                    user.PhoneNumber = p.PhoneNumber;
+                    
+                    break;
+                }
+            }
+            return View(user);
+        }
+
+        // POST: Account/Edit/5
+        [HttpPost]
+        public ActionResult Edit(RegisterViewModel collection)
+        {
+            
+                // TODO: Add update logic here
+                string id = User.Identity.GetUserId();
+                DBZipShipEntities db = new DBZipShipEntities();
+                UserViewModel user = new UserViewModel();
+                foreach (AspNetUser p in db.AspNetUsers)
+                {
+                    if (p.Id == id)
+                    {   
+
+                        p.Name = collection.Name;
+                        p.Email=collection.Email;
+                        p.Address= collection.Address;
+                        p.CNIC=collection.CNIC;
+                        p.PhoneNumber=collection.PhoneNumber;
+                        p.UserName = collection.Email;
+                        break;
+                    }
+                }
+            db.SaveChanges();
+            return View();
+        }
+
+        // GET: Account/Delete/5
+        public ActionResult Delete()
+        {
+            return View();
+        }
+
+        // POST: Account/Delete/5
+        [HttpPost]
+        public ActionResult Delete(UserViewModel collection)
+        {
+                // TODO: Add delete logic here
+                DBZipShipEntities db = new DBZipShipEntities();
+                string id = User.Identity.GetUserId();
+                var orders = db.Orders.Where(x => x.AddedBy == id).ToList();
+                foreach (var i in orders)
+                {
+                    db.Entry(i).State = System.Data.Entity.EntityState.Deleted;
+                }
+
+                db.SaveChanges();
+                var trips = db.Trips.Where(x => x.AddedBy == id).ToList();
+                foreach (var i in trips)
+                {
+                    db.Entry(i).State = System.Data.Entity.EntityState.Deleted;
+                }
+                db.SaveChanges();
+                var reviews = db.Reviews.Where(x => x.AddedBy == id).ToList();
+                foreach (var i in reviews)
+                {
+                    db.Entry(i).State = System.Data.Entity.EntityState.Deleted;
+                }
+                db.SaveChanges();
+                var user = db.AspNetUsers.Where(x => x.Id == id).First();
+                db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+                AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+                return RedirectToAction("Index", "Home");
+
+        }
 
         //
         // POST: /Account/Login
@@ -145,7 +231,7 @@ namespace ZipShip.Controllers
         }
 
         //
-        // GET: /Account/Register
+        // GET: /Account/Regeister
         [AllowAnonymous]
         public ActionResult Register()
         {
@@ -167,7 +253,7 @@ namespace ZipShip.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
@@ -175,6 +261,7 @@ namespace ZipShip.Controllers
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
                     return Redirect("~/Account/Index");
+                    
                 }
                 AddErrors(result);
             }

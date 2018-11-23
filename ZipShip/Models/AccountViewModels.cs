@@ -63,6 +63,8 @@ namespace ZipShip.Models
 
     public class RegisterViewModel
     {
+        
+        public string Username { get; set; }
         [Required]
         [RegularExpression(@"^[a-zA-Z ]*$",ErrorMessage = "Name Should be in Alphabets")]
         [Display(Name = "Name")]

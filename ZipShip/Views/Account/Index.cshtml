@@ -6,7 +6,31 @@
 
 <head>
     <style>
+        a:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
+        .btn:hover{
+            color:white;
+        }
+        a {
+            color: white;
+            background-color: purple;
+        }
 
+        input:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
+
+        input {
+            color: white;
+            background-color: purple;
+        }
         body {
             background-image: url('/Content/Images/account.jpg');
             position: center;
@@ -30,26 +54,26 @@
         <h2 style="color:purple">Explore The World!</h2>
         <div>
             <div style="padding-left:75px"><img src="~/Content/Images/user.png" style="height:100px;width:130px;padding-right:30px" /></div>
-            <p style="padding-left:79px"><b>My Account</b></p>
+            <p style="padding-left:80px"><b>My Account</b></p>
         </div>
     </div>
 
 
     <div class="form-group">
-        <a href="~/Trips/Index" class="btn btn-default" style="background-color:purple;color:white;width:400px;height:40px"><b class="pt-3">Trips</b></a>
+        <a href="~/Trips/Index" class="btn" style="width:400px;height:40px"><b class="pt-3">Trips</b></a>
     </div>
     <div class="form-group" ">
-        <a href="/Order/Index" class="btn btn-default" style="background-color:purple;color:white;width:400px;height:40px"><b class="pt-3">Orders</b></a>
+        <a href="/Order/Index" class="btn" style="width:400px;height:40px"><b class="pt-3">Orders</b></a>
     </div>
     <div class="form-group">
-        <a href="~/Review/Create" class="btn btn-default" style="background-color:purple;color:white;width:400px;height:40px"><b class="pt-3">Give Reviews</b></a>
+        <a href="~/Review/Create" class="btn" style="width:400px;height:40px"><b class="pt-3">Give Reviews</b></a>
     </div>
     <div class="form-group">
-        <a href="~/Account/Edit" class="btn btn-default" style="background-color:purple;color:white;width:400px;height:40px"><b class="pt-3">Edit/Delete Account</b></a>
+        <a href="~/Account/Edit" class="btn" style="width:400px;height:40px"><b class="pt-3">Edit/Delete Account</b></a>
     </div>
     <div>
         <form>
-            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn" style="background-color:purple;color:white;width:400px;height:38px"><b>Log off</b></a>
+            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn" style="width:400px;height:38px"><b>Log off</b></a>
         </form>
     </div>
 </body>
