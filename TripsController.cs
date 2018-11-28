@@ -14,6 +14,7 @@ namespace ZipShip.Controllers
         public ActionResult Index()
         {
             
+            
             return View();
         }
 
@@ -75,8 +76,15 @@ namespace ZipShip.Controllers
         // GET: Trips/Edit/5
         public ActionResult Edit()
         {
+            DBZipShipEntities db = new DBZipShipEntities();
+            string id = User.Identity.GetUserId();
+            var det = db.Trips.Where(x => x.AddedBy == id).First();
+            TripViewModel t = new TripViewModel();
+            t.Country = det.Country;
+            t.City = det.City;
+            t.Date =Convert.ToDateTime(det.Date);
 
-            return View();
+            return View(t);
         }
 
         // POST: Trips/Edit/5
@@ -86,7 +94,13 @@ namespace ZipShip.Controllers
             try
             {
                 // TODO: Add update logic here
-                
+                DBZipShipEntities db = new DBZipShipEntities();
+                string id = User.Identity.GetUserId();
+                var det = db.Trips.Where(x => x.AddedBy == id).First();
+                det.Country = collection.Country;
+                det.City = collection.City;
+                det.Date = Convert.ToDateTime(collection.Date);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -108,7 +122,11 @@ namespace ZipShip.Controllers
             try
             {
                 // TODO: Add delete logic here
-                
+                DBZipShipEntities db = new DBZipShipEntities();
+                string id = User.Identity.GetUserId();
+                var det = db.Trips.Where(x => x.AddedBy == id).First();
+                db.Entry(det).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
