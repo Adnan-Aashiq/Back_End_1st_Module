@@ -1,11 +1,37 @@
-﻿@model ZipShip.Models.UserViewModel
+﻿@model ZipShip.Models.RegisterViewModel
 
 @{
     ViewBag.Title = "Details";
 }
 <head>
     <style>
+        a:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
 
+        .btn:hover {
+            color: white;
+        }
+
+        a {
+            color: white;
+            background-color: purple;
+        }
+
+        input:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
+
+        input {
+            color: white;
+            background-color: purple;
+        }
         body {
             background-image: url('/Content/Images/orders.jpg');
             position: center;
@@ -29,6 +55,16 @@
 
         <hr />
         <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Image)
+            </dt>
+
+            <dd>
+                <img src="@Model.ImagePath" style="width:150px;height:200px;border-radius:50%" />
+            </dd>
+            <br />
+            <br />
+
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
@@ -69,13 +105,15 @@
                 @Html.DisplayFor(model => model.PhoneNumber)
             </dd>
 
-            
+
+
+
 
         </dl>
     </div>
     <center>
         <div class="form-group">
-            <a href="~/Account/Index" class="btn btn-default" style="background-color:purple;color:white;width:330px;height:40px"><b class="pt-3">My Account</b></a>
+            <a href="~/Account/Index" class="btn" style="width:330px;height:40px"><b class="pt-3">My Account</b></a>
         </div>
     </center>
 </body>

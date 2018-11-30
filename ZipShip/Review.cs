@@ -15,7 +15,8 @@ namespace ZipShip
     public partial class Review
     {
         public string Review1 { get; set; }
-        public string AddedBy { get; set; }
+        public string Name { get; set; }
         public int id { get; set; }
+        public string ImagePath { get; set; }
     }
 }

@@ -22,5 +22,7 @@ namespace ZipShip
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public int id { get; set; }
+        public Nullable<int> Earnings { get; set; }
+        public string ImagePath { get; set; }
     }
 }

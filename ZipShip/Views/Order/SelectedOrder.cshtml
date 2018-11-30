@@ -1,11 +1,37 @@
-﻿@model IEnumerable<ZipShip.Models.OrderViewModel>
+﻿@model IEnumerable<ZipShip.Models.OrderListViewModel>
 
 @{
     ViewBag.Title = "SelectedOrder";
 }
 <head>
     <style>
+        a:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
 
+        .btn:hover {
+            color: white;
+        }
+
+        a {
+            color: white;
+            background-color: purple;
+        }
+
+        input:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
+
+        input {
+            color: white;
+            background-color: purple;
+        }
         body {
             background-image: url('/Content/Images/orders.jpg');
             position: center;
@@ -28,6 +54,13 @@
 
     <table class="table">
         <tr class="text">
+
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -51,29 +84,35 @@
 
         @foreach (var item in Model)
         {
-            <tr class="text">
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Quantity)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DealPrice)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddedBy)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddedOn)
-                </td>
-                <td>
-                    <a href="/Order/Delete/@item.Id" class="btn btn-default" style="background-color:purple;color:white;width:180px;height:40px">Delete</a>
-                </td>
-            </tr>
+        <tr class="text">
+            <td>
+                <img src="@item.ImagePath" style="width:30px;height:30px;border-radius:50%" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DealPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddedOn)
+            </td>
+            <td>
+                <a href="/Order/Delete/@item.Id" class="btn" style="width:180px;height:40px">Delete</a>
+            </td>
+        </tr>
 
         }
 
@@ -81,7 +120,7 @@
     </table>
     <center>
         <div class="form-group">
-            <a href="~/Account/Index" class="btn btn-default" style="background-color:purple;color:white;width:330px;height:40px"><b class="pt-3">My Account</b></a>
+            <a href="~/Account/Index" class="btn" style="width:330px;height:40px"><b class="pt-3">My Account</b></a>
         </div>
     </center>
 </body>

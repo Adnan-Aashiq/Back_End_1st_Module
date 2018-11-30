@@ -21,5 +21,9 @@ namespace ZipShip
         public Nullable<long> DealPrice { get; set; }
         public string AddedBy { get; set; }
         public Nullable<System.DateTime> AddedOn { get; set; }
+        public string Status { get; set; }
+        public string ImagePath { get; set; }
+        public string Country { get; set; }
+        public string Brand { get; set; }
     }
 }

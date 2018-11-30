@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -11,29 +12,96 @@ namespace ZipShip.Controllers
     {
          
         // GET: Admin
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(string Message)
         {
             List<AdminDashboardViewModel> list = new List<AdminDashboardViewModel>();
-            AdminDashboardViewModel a = new AdminDashboardViewModel();
-            a.Traveller = "Saqib";
-            a.Shopper = "Hamza";
-            a.ZipShipEarning = "2000";
-            a.Order = "Iphone xs";
-            a.Status = "Delievered";
-            list.Add(a);
+            DBZipShipEntities1 db = new DBZipShipEntities1();
+            var orders = db.Orders.ToList();
+            var trips = db.Trips.ToList();
+            var deal = db.Deals.ToList();
+            if(deal == null)
+            {
+                AdminDashboardViewModel a = new AdminDashboardViewModel();
+
+                a.Traveller = "No Deal Yet";
+                a.Shopper = "No Deal Yet";
+                a.ZipShipEarning =Convert.ToDouble("No Deal Yet");
+                a.Order = "No Deal Yet";
+                
+                list.Add(a);
+            }
+            else
+            {
+                AdminDashboardViewModel a = new AdminDashboardViewModel();
+
+                foreach (var d in deal)
+                {
+                    var traveller = db.AspNetUsers.Where(x=> x.Id == d.SelectedBy).First();
+                    a.Traveller = traveller.Name;
+                    var order= db.Orders.Where(x => x.Id == d.OrderId).First();
+                    var shopper = db.AspNetUsers.Where(x => x.Id == order.AddedBy).First();
+                    a.Shopper = shopper.Name;
+                    a.Order = order.Name;
+                    long p =Convert.ToInt16(order.DealPrice - order.Price);
+                    a.ZipShipEarning = Convert.ToDouble((0.07 * order.Price)+(0.07*p));
+                    a.OrderId = order.Id;
+                    list.Add(a);
+                }
+                
+            }
+            var admin = db.Admins.First();
+            ViewBag.earning = admin.Earnings;
+            ViewBag.Image = admin.ImagePath;
+            ViewBag.Message = Message;
             return View(list);
         }
+
+
+        public ActionResult ChangeImage()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangeImage(ImageViewModel collection)
+        {
+            string filename = Path.GetFileNameWithoutExtension(collection.Image.FileName);
+            string ext = Path.GetExtension(collection.Image.FileName);
+            filename = filename + DateTime.Now.Millisecond.ToString();
+            filename = filename + ext;
+            string filetodb = "/Image/" + filename;
+            filename = Path.Combine(Server.MapPath("~/Image/"), filename);
+            collection.Image.SaveAs(filename);
+            DBZipShipEntities1 db = new DBZipShipEntities1();
+            
+            var admin = db.Admins.First();
+             admin.ImagePath = filetodb;
+            db.SaveChanges();
+            string name = admin.Name;
+            string message = "Your Picture is Updated " + admin.Name;
+
+            return RedirectToAction("Dashboard", "Admin", new { Message = message });
+        }
+
+
 
         public ActionResult RegisteredUsers()
         {
             List<UserViewModel> list = new List<UserViewModel>();
-            UserViewModel u = new UserViewModel();
-            u.Name = "Rana Kashif";
-            u.Email = "kashif@gmail.com";
-            u.Address = "Iqbal Town";
-            u.CNIC = "3520261257293";
-            u.PhoneNumber = "03216964902";
-            u.Password = "asad123";
+            DBZipShipEntities1 db = new DBZipShipEntities1();
+            var users = db.AspNetUsers.ToList();
+            foreach(var i in users)
+            {
+                UserViewModel u = new UserViewModel();
+                u.Name = i.Name;
+                u.Address = i.Address;
+                u.CNIC = i.CNIC;
+                u.PhoneNumber = i.PhoneNumber;
+                u.Email = i.Email;
+                u.ImagePath = i.ImagePath;
+                list.Add(u);
+            }
+
             return View(list);
         }
 
@@ -42,8 +110,68 @@ namespace ZipShip.Controllers
 
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Login(LoginViewModel collection)
+        {
+            DBZipShipEntities1 db = new DBZipShipEntities1();
+            var admin = db.Admins.First();
+            if(admin.Password == collection.Password && admin.Email == collection.Email)
+            {
+                string message = "Welcome " + admin.Name;
+                return RedirectToAction("Dashboard", "Admin", new { Message = message });
+            }
+            else
+            {
+                
+
+                return RedirectToAction("Index", "Home", new { Message = "Invalid Admin Login!" });
+            }
+            
+        }
         // GET: Admin/Details/5
         public ActionResult Details(int id)
+        {
+            return View();
+        }
+
+
+        public ActionResult Select(int id)
+        {
+            DBZipShipEntities1 db = new DBZipShipEntities1();
+            var order = db.Orders.Where(x => x.Id == id).First();
+            string shopperid = order.AddedBy;
+            var shopper = db.AspNetUsers.Where(x => x.Id == shopperid).First();
+            
+            order.Status = "Deleivered";
+            CompletedOrder comorder = new CompletedOrder();
+            var deal = db.Deals.Where(x => x.OrderId == order.Id).First();
+            var traveller = db.AspNetUsers.Where(x => x.Id == deal.SelectedBy).First();
+            comorder.OrderName = order.Name;
+            comorder.OrderCountry = order.Country;
+            comorder.ShopperName = shopper.Name;
+            comorder.TravellerName = traveller.Name;
+            comorder.ImagePath = order.ImagePath;
+            comorder.TravellerId = traveller.Id;
+            comorder.ShopperId = shopper.Id;
+            db.CompletedOrders.Add(comorder);
+
+            var admin = db.Admins.First();
+            long p = Convert.ToInt16(order.DealPrice - order.Price);
+            double earnings = Convert.ToDouble((0.07 * order.Price) + (0.07 * p));
+            admin.Earnings =Convert.ToInt16(admin.Earnings + earnings);
+
+            string message = "Deal Between" + traveller.Name + " and " + shopper.Name +   " is Completed! " + earnings + " Rs is added to ZipShip Earnings";
+
+            db.Entry(order).State = System.Data.Entity.EntityState.Deleted;
+            db.Entry(deal).State = System.Data.Entity.EntityState.Deleted;
+
+            db.SaveChanges();
+            
+            return RedirectToAction("Dashboard", "Admin", new { Message = message });
+        }
+
+        public ActionResult Invalid()
         {
             return View();
         }
@@ -73,7 +201,17 @@ namespace ZipShip.Controllers
         // GET: Admin/Edit/5
         public ActionResult Edit()
         {
-            return View();
+            DBZipShipEntities1 db = new DBZipShipEntities1();
+            var admin = db.Admins.First();
+            AdminViewModel a = new AdminViewModel();
+            a.Name = admin.Name;
+            a.Address = admin.Address;
+            a.CNIC = admin.CNIC;
+            a.PhoneNumber = admin.Phone;
+            a.Email = admin.Email;
+            a.Password = admin.Password;
+            return View(a); 
+
         }
 
         // POST: Admin/Edit/5
@@ -83,8 +221,20 @@ namespace ZipShip.Controllers
             try
             {
                 // TODO: Add update logic here
+                DBZipShipEntities1 db = new DBZipShipEntities1();
+                var admin = db.Admins.First();
+                admin.Name = collection.Name;
+                admin.CNIC = collection.CNIC;
+                admin.Address = collection.Address;
+                admin.Phone = collection.PhoneNumber;
+                admin.Email = collection.Email;
+                admin.Password = collection.Password;
+                db.SaveChanges();
+                
+                var user = db.Admins.First();
 
-                return RedirectToAction("Dashboard");
+                string message = "Your Information is Updated Successfully " + user.Name;
+                return RedirectToAction("Dashboard", "Admin", new { Message = message });
             }
             catch
             {

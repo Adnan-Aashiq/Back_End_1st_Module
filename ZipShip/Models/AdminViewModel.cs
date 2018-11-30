@@ -8,6 +8,11 @@ namespace ZipShip.Models
 {
     public class AdminViewModel
     {
+
+        [Display(Name = "Add Image")]
+        public HttpPostedFileBase Image { get; set; }
+        [Display(Name = "Order Image")]
+        public string ImagePath { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }
@@ -21,9 +26,10 @@ namespace ZipShip.Models
         public string Shopper { get; set; }
         public string Traveller { get; set; }
         public string Order { get; set; }
+        public int OrderId { get; set; }
         public string Status { get; set; }
         [Display(Name ="ZipShip Earnings")]
-        public string ZipShipEarning { get; set; }
+        public double ZipShipEarning { get; set; }
 
     }
 }

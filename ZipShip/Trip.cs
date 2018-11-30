@@ -19,6 +19,6 @@ namespace ZipShip
         public string City { get; set; }
         public Nullable<System.DateTime> Date { get; set; }
         public string AddedBy { get; set; }
-        public string AddedOn { get; set; }
+        public Nullable<System.DateTime> AddedOn { get; set; }
     }
 }

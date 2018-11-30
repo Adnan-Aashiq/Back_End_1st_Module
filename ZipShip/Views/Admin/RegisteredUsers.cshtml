@@ -6,7 +6,33 @@
 
 <head>
     <style>
+        a:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
 
+        .btn:hover {
+            color: white;
+        }
+
+        a {
+            color: white;
+            background-color: purple;
+        }
+
+        input:hover {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+            font-weight: bolder;
+        }
+
+        input {
+            color: white;
+            background-color: purple;
+        }
         body {
             background-image: url('/Content/Images/signup.jpg');
             position: center;
@@ -29,6 +55,9 @@
     <table class="table">
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
@@ -43,42 +72,35 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
+
 
             <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CNIC)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ConfirmPassword)
-                </td>
-                <td>
-                   
-                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                <img src="@item.ImagePath" style="width:30px;height:30px;border-radius:50%" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CNIC)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+
+
+        </tr>
         }
 
     </table>
