@@ -69,13 +69,13 @@ namespace ZipShip.Models
         public string Username { get; set; }
         [Required]
         [RegularExpression(@"^[a-zA-Z ]*$",ErrorMessage = "Name Should be in Alphabets")]
-        [Display(Name = "Name*")]
+        [Display(Name = "Name")]
 
         public string Name { get; set; }
 
         [Required]
         [EmailAddress(ErrorMessage = "Enter in correct Email Fromat")]
-        [Display(Name = "Email*")]
+        [Display(Name = "Email")]
         public string Email { get; set; }
         [Display(Name = "Add Image")]
         public HttpPostedFileBase Image { get; set; }
@@ -84,29 +84,27 @@ namespace ZipShip.Models
 
         [Required]
 
-        [Display(Name = "Address*")]
+        [Display(Name = "Address")]
         public string Address { get; set; }
 
         [Required]
-        [RegularExpression(@"^[0-9]+$", ErrorMessage = "CNIC should be Digits")]
         [StringLength(13, ErrorMessage = "CNIC must be 13 digits.", MinimumLength = 13)]
-        [Display(Name = "CNIC*")]
+        [Display(Name = "CNIC")]
         public string CNIC { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password*")]
+        [Display(Name = "Password")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password*")]
+        [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [StringLength(11, ErrorMessage = "Phone Number must be 11 digits.", MinimumLength = 11)]
         [RegularExpression(@"^[0-9]+$", ErrorMessage ="Phone Number should be Digits")]
-        [Display(Name = "Phone Number*")]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
     }
 

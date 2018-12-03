@@ -55,19 +55,18 @@
     <div>
         <h4>OrderViewModel</h4>
         <hr />
-
+        
 
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
-            <div class="form-actions" style="padding-left:210px">
-                <input type="submit" value="Confirm Delete" class="btn" style="font-weight:bolder;width:280px;height:40px" />
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn" style="width:330px;height:40px" /> 
 
             </div>
-            <br />
-            <div class="form-group" style="padding-left:210px">
-                <a href="~/Account/Index" class="btn" style="width:280px;height:40px"><b class="pt-3">My Account</b></a>
+            <div class="form-group">
+                <a href="~/Account/Index" class="btn" style="width:330px;height:40px"><b class="pt-3">My Account</b></a>
             </div>
         }
     </div>

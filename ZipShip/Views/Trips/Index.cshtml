@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ZipShip.Models.TripListViewModel>
+﻿@model IEnumerable<ZipShip.Models.TripViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -50,19 +50,6 @@
 </head>
 <body class="text">
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        if (ViewBag.Message != null)
-        {
-            <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.Message");
-            };
-            </script>
-        }
-    }
 
     <h2>Index</h2>
 
@@ -101,7 +88,9 @@
                     @Html.DisplayFor(modelItem => item.Date)
                 </td>
 
-                <td></td>
+                <td>
+                    
+                </td>
             </tr>
         }
 
@@ -114,7 +103,7 @@
             <a href="~/Trips/Filtered" class="btn" style="width:330px;height:40px"><b class="pt-3">Filtered Trips</b></a>
         </div>
         <div class="form-group">
-            <a href="~/Trips/MyTrips" class="btn" style="width:330px;height:40px"><b class="pt-3">My Trips</b></a>
+            <a href="~/Trips/Edit" class="btn" style="width:330px;height:40px"><b class="pt-3">Edit/Delete My Trip</b></a>
         </div>
         <div class="form-group">
             <a href="~/Account/Index" class="btn" style="width:330px;height:40px"><b class="pt-3">My Account</b></a>

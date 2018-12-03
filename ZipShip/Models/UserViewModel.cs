@@ -16,9 +16,9 @@ namespace ZipShip.Models
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
-        [Display(Name = "User Image*")]
+        [Display(Name = "Add Image")]
         public HttpPostedFileBase Image { get; set; }
-        [Display(Name = "Add Image*")]
+        [Display(Name = "Add Image")]
         public string ImagePath { get; set; }
 
     }

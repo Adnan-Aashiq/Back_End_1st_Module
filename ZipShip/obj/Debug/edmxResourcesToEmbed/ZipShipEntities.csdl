@@ -23,7 +23,6 @@
     <Property Name="ConfirmPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
     <Property Name="id" Type="Int32" Nullable="false" />
     <Property Name="Earnings" Type="Int32" />
-    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="AspNetRole">
     <Key>
@@ -98,18 +97,14 @@
     <Property Name="AddedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="AddedOn" Type="DateTime" Precision="0" />
     <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="Brand" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Review">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="Review1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="AddedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
     <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="Trip">
     <Key>
@@ -177,19 +172,5 @@
       <End Role="AspNetRoles" EntitySet="AspNetRoles" />
       <End Role="AspNetUsers" EntitySet="AspNetUsers" />
     </AssociationSet>
-    <EntitySet Name="CompletedOrders" EntityType="DBZipShipModel.CompletedOrder" />
   </EntityContainer>
-  <EntityType Name="CompletedOrder">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="OrderName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="OrderCountry" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="TravellerName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ShopperName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="TravellerId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-    <Property Name="ShopperId" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-  </EntityType>
 </Schema>

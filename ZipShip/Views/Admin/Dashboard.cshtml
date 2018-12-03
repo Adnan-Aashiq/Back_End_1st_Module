@@ -50,27 +50,12 @@
 </head>
 <body class="text">
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        if (ViewBag.Message != null)
-        {
-            <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.Message");
-            };
-            </script>
-        }
-    }
 
     <h2>Dashboard</h2>
-    <div>
-        <img src="@ViewBag.Image" style="width:30%;height:20%"><a href="#" class="btn" style="width:330px;height:40px;float:right"><b class="pt-3">Total Earning : @ViewBag.earning</b></a>
-        
+    <div class="form-group" style="padding-left:800px">
+        <a href="#" class="btn" style="width:330px;height:40px"><b class="pt-3">Total Earning : @ViewBag.earning</b></a>
     </div>
-    
-    <br />
+
     <table class="table">
         <tr>
             <th>
@@ -123,9 +108,6 @@
     <div style="padding-left:390px">
         <div class="form-group">
             <a href="~/Admin/Edit" class="btn" style="width:330px;height:40px"><b class="pt-3">Edit Info</b></a>
-        </div>
-        <div class="form-group">
-            <a href="~/Admin/ChangeImage" class="btn" style="width:330px;height:40px"><b class="pt-3">Change Picture</b></a>
         </div>
         <div class="form-group">
             <a href="/Admin/RegisteredUsers" class="btn" style="width:330px;height:40px"><b class="pt-3">Registered Users</b></a>

@@ -1,4 +1,4 @@
-﻿@model ZipShip.Models.RegisterViewModel
+﻿@model ZipShip.Models.UserViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -56,16 +56,6 @@
         <hr />
         <dl class="dl-horizontal">
             <dt>
-                @Html.DisplayNameFor(model => model.Image)
-            </dt>
-
-            <dd>
-                <img src="@Model.ImagePath" style="width:150px;height:200px;border-radius:50%" />
-            </dd>
-            <br />
-            <br />
-
-            <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
 
@@ -105,9 +95,7 @@
                 @Html.DisplayFor(model => model.PhoneNumber)
             </dd>
 
-
-
-
+            
 
         </dl>
     </div>

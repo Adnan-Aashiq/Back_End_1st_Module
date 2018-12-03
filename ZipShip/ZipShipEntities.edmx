@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DBZipShipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="DBZipShipModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="__MigrationHistory">
           <Key>
             <PropertyRef Name="MigrationId" />
@@ -26,7 +26,8 @@
           <Property Name="Phone" Type="nvarchar(max)" />
           <Property Name="Password" Type="nvarchar(max)" />
           <Property Name="ConfirmPassword" Type="nvarchar(max)" />
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Earnings" Type="int" />
         </EntityType>
         <EntityType Name="AspNetRoles">
           <Key>
@@ -81,6 +82,7 @@
           <Property Name="LockoutEnabled" Type="bit" />
           <Property Name="AccessFailedCount" Type="int" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="ImagePath" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Deals">
           <Key>
@@ -100,7 +102,8 @@
           <Property Name="Price" Type="bigint" />
           <Property Name="DealPrice" Type="bigint" />
           <Property Name="AddedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="AddedOn" Type="datetime" />
+          <Property Name="AddedOn" Type="date" />
+          <Property Name="Status" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -117,9 +120,9 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Country" Type="nvarchar(max)" />
           <Property Name="City" Type="nvarchar(max)" />
-          <Property Name="Date" Type="datetime" />
+          <Property Name="Date" Type="date" />
           <Property Name="AddedBy" Type="nvarchar" MaxLength="128" />
-          <Property Name="AddedOn" Type="nchar" MaxLength="10" />
+          <Property Name="AddedOn" Type="date" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1">
@@ -206,8 +209,7 @@
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DBZipShipModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -233,6 +235,7 @@
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ConfirmPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="Earnings" Type="Int32" />
         </EntityType>
         <EntityType Name="AspNetRole">
           <Key>
@@ -285,6 +288,7 @@
           <NavigationProperty Name="AspNetUserClaims" Relationship="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserClaims" />
           <NavigationProperty Name="AspNetUserLogins" Relationship="Self.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" FromRole="AspNetUsers" ToRole="AspNetUserLogins" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
+          <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Deal">
           <Key>
@@ -304,7 +308,8 @@
           <Property Name="Price" Type="Int64" />
           <Property Name="DealPrice" Type="Int64" />
           <Property Name="AddedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="AddedOn" Type="DateTime" Precision="3" />
+          <Property Name="AddedOn" Type="DateTime" Precision="0" />
+          <Property Name="Status" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Review">
           <Key>
@@ -321,9 +326,9 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Country" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
           <Property Name="AddedBy" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="AddedOn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="AddedOn" Type="DateTime" Precision="0" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">
@@ -400,6 +405,7 @@
           <EntitySetMapping Name="Admins">
             <EntityTypeMapping TypeName="DBZipShipModel.Admin">
               <MappingFragment StoreEntitySet="Admin">
+                <ScalarProperty Name="Earnings" ColumnName="Earnings" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -441,6 +447,7 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="DBZipShipModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -471,6 +478,7 @@
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="DBZipShipModel.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />

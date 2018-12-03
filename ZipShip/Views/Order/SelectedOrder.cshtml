@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ZipShip.Models.OrderListViewModel>
+﻿@model IEnumerable<ZipShip.Models.OrderViewModel>
 
 @{
     ViewBag.Title = "SelectedOrder";
@@ -54,10 +54,6 @@
 
     <table class="table">
         <tr class="text">
-
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Id)
             </th>
@@ -85,9 +81,6 @@
         @foreach (var item in Model)
         {
         <tr class="text">
-            <td>
-                <img src="@item.ImagePath" style="width:30px;height:30px;border-radius:50%" />
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Id)
             </td>

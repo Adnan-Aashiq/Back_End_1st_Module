@@ -65,34 +65,23 @@ namespace ZipShip.Controllers
             return View();
         }
 
-        
-        // GET: /Account/Index/5
-        public ActionResult Index(string Message)
+        // GET: /Account/Index
+        public ActionResult Index()
         {
-            DBZipShipEntities1 db = new DBZipShipEntities1();
+            DBZipShipEntities db = new DBZipShipEntities();
             string id = User.Identity.GetUserId();
             var a = db.AspNetUsers.Where(x => x.Id == id).First();
             ViewBag.name = a.Name;
             ViewBag.image = a.ImagePath;
-            ViewBag.Message = Message;
-
             return View();
         }
 
-
-
-
-
-
-
-
         // GET: Account/Edit/5
-        
         public ActionResult Edit()
         {
             string id = User.Identity.GetUserId();
-            DBZipShipEntities1 db = new DBZipShipEntities1();
-            RegisterViewModel user = new RegisterViewModel();
+            DBZipShipEntities db = new DBZipShipEntities();
+            UserViewModel user = new UserViewModel();
             foreach(AspNetUser p in db.AspNetUsers)
             {
                 if(p.Id == id)
@@ -102,7 +91,7 @@ namespace ZipShip.Controllers
                     user.Address = p.Address;
                     user.CNIC = p.CNIC;
                     user.PhoneNumber = p.PhoneNumber;
-                   
+                    user.ImagePath = p.ImagePath;
                     break;
                 }
             }
@@ -111,62 +100,38 @@ namespace ZipShip.Controllers
 
         // POST: Account/Edit/5
         [HttpPost]
-       
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(RegisterViewModel collection)
         {
-            try
-            {
-                // TODO: Add update logic here
-                if (collection.Image != null)
-                {
-                    string filename = Path.GetFileNameWithoutExtension(collection.Image.FileName);
-                    string ext = Path.GetExtension(collection.Image.FileName);
-                    filename = filename + DateTime.Now.Millisecond.ToString();
-                    filename = filename + ext;
-                    string filetodb = "/Image/" + filename;
-                    filename = Path.Combine(Server.MapPath("~/Image/"), filename);
-                    collection.Image.SaveAs(filename);
-                    collection.ImagePath = filetodb;
-                }
-                else
-                {
-                    collection.ImagePath = "/Content/Images/user.png";
-                }
 
-                string id = User.Identity.GetUserId();
-                string name = "";
-                DBZipShipEntities1 db = new DBZipShipEntities1();
-                RegisterViewModel user = new RegisterViewModel();
-
-
+            // TODO: Add update logic here
+            string filename = Path.GetFileNameWithoutExtension(collection.Image.FileName);
+            string ext = Path.GetExtension(collection.Image.FileName);
+            filename = filename + DateTime.Now.Millisecond.ToString();
+            filename = filename + ext;
+            string filetodb = "/Image/" + filename;
+            filename = Path.Combine(Server.MapPath("~/Image/"), filename);
+            collection.Image.SaveAs(filename);
+            collection.ImagePath = filetodb;
+            string id = User.Identity.GetUserId();
+                DBZipShipEntities db = new DBZipShipEntities();
+                UserViewModel user = new UserViewModel();
                 foreach (AspNetUser p in db.AspNetUsers)
                 {
                     if (p.Id == id)
-                    {
+                    {   
 
                         p.Name = collection.Name;
-                        p.Email = collection.Email;
-                        p.Address = collection.Address;
-                        p.CNIC = collection.CNIC;
-                        p.PhoneNumber = collection.PhoneNumber;
+                        p.Email=collection.Email;
+                        p.Address= collection.Address;
+                        p.CNIC=collection.CNIC;
+                        p.PhoneNumber=collection.PhoneNumber;
                         p.UserName = collection.Email;
                         p.ImagePath = collection.ImagePath;
-                        name = collection.Name;
                         break;
                     }
                 }
-                db.SaveChanges();
-                string message = "Welcome to your account " + name;
-
-                return RedirectToAction("Index", "Account", new { Message = message });
-            }
-            catch
-            {
-                return View();
-            }
-            
-            
+            db.SaveChanges();
+            return View();
         }
 
         // GET: Account/Delete/5
@@ -180,10 +145,9 @@ namespace ZipShip.Controllers
         public ActionResult Delete(UserViewModel collection)
         {
                 // TODO: Add delete logic here
-                DBZipShipEntities1 db = new DBZipShipEntities1();
+                DBZipShipEntities db = new DBZipShipEntities();
                 string id = User.Identity.GetUserId();
                 var orders = db.Orders.Where(x => x.AddedBy == id).ToList();
-            
                 foreach (var i in orders)
                 {
                     db.Entry(i).State = System.Data.Entity.EntityState.Deleted;
@@ -196,81 +160,20 @@ namespace ZipShip.Controllers
                     db.Entry(i).State = System.Data.Entity.EntityState.Deleted;
                 }
                 db.SaveChanges();
-                /*var reviews = db.Reviews.Where(x => x.AddedBy == id).ToList();
+                var reviews = db.Reviews.Where(x => x.AddedBy == id).ToList();
                 foreach (var i in reviews)
                 {
                     db.Entry(i).State = System.Data.Entity.EntityState.Deleted;
-                }*/
+                }
                 db.SaveChanges();
                 var user = db.AspNetUsers.Where(x => x.Id == id).First();
                 db.Entry(user).State = System.Data.Entity.EntityState.Deleted;
                 db.SaveChanges();
                 AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-                string message = "Your Account is Deleted" + user.Name;
-
-                return RedirectToAction("Index", "Account", new { Message = message });
+                return RedirectToAction("Index", "Home");
 
         }
 
-        public ActionResult Review()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult Review(ReviewViewModel collection)
-        {
-            if(collection.Review != null)
-            {
-                DBZipShipEntities1 db = new DBZipShipEntities1();
-                string id = User.Identity.GetUserId();
-
-                var user = db.AspNetUsers.Where(x => x.Id == id).First();
-                string name = user.Name;
-                Review r = new Review();
-                r.Review1 = collection.Review;
-                r.Name = user.Name;
-                r.ImagePath = user.ImagePath;
-                db.Reviews.Add(r);
-                db.SaveChanges();
-                string message = "Your Review is Added " + name;
-
-                return RedirectToAction("Index", "Account", new { Message = message });
-            }
-            else
-            {
-                return View();
-            }
-                
-            
-            
-        }
-
-
-        public ActionResult ChangeImage()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult ChangeImage(ImageViewModel collection)
-        {
-            string filename = Path.GetFileNameWithoutExtension(collection.Image.FileName);
-            string ext = Path.GetExtension(collection.Image.FileName);
-            filename = filename + DateTime.Now.Millisecond.ToString();
-            filename = filename + ext;
-            string filetodb = "/Image/" + filename;
-            filename = Path.Combine(Server.MapPath("~/Image/"), filename);
-            collection.Image.SaveAs(filename);
-            DBZipShipEntities1 db = new DBZipShipEntities1();
-            string id = User.Identity.GetUserId();
-            var user = db.AspNetUsers.Where(x => x.Id == id).First();
-            user.ImagePath = filetodb;
-            db.SaveChanges();
-            string message = "Your Picture is Updated " + user.Name;
-
-            return RedirectToAction("Index", "Account", new { Message = message });
-        }
         //
         // POST: /Account/Login
         [HttpPost]
@@ -282,20 +185,14 @@ namespace ZipShip.Controllers
             {
                 return View(model);
             }
-            DBZipShipEntities1 db = new DBZipShipEntities1();
 
-            
-            
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    var user = db.AspNetUsers.Where(x => x.Email == model.Email).First();
-                    string message = "Welcome to your account " + user.Name;
-
-                    return RedirectToAction("Index", "Account", new { Message = message });
+                    return Redirect("~/Account/Index");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -365,22 +262,15 @@ namespace ZipShip.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if(model.Image != null)
-            {
-                string filename = Path.GetFileNameWithoutExtension(model.Image.FileName);
-                string ext = Path.GetExtension(model.Image.FileName);
-                filename = filename + DateTime.Now.Millisecond.ToString();
-                filename = filename + ext;
-                string filetodb = "/Image/" + filename;
-                filename = Path.Combine(Server.MapPath("~/Image/"), filename);
-                model.Image.SaveAs(filename);
-                model.ImagePath = filetodb;
-            }
-            else
-            {
-                model.ImagePath = "/Content/Images/user.png";
-            }
-            
+
+            string filename = Path.GetFileNameWithoutExtension(model.Image.FileName);
+            string ext = Path.GetExtension(model.Image.FileName);
+            filename = filename + DateTime.Now.Millisecond.ToString();
+            filename = filename + ext;
+            string filetodb = "/Image/" + filename;
+            filename = Path.Combine(Server.MapPath("~/Image/"), filename);
+            model.Image.SaveAs(filename);
+            model.ImagePath = filetodb;
             if (ModelState.IsValid)
             {
                 
@@ -396,8 +286,7 @@ namespace ZipShip.Controllers
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    string Message = "Welcome to your account " + model.Name;
-                    return RedirectToAction("Index","Account",new { para = Message});
+                    return Redirect("~/Account/Index");
                     
                 }
                 AddErrors(result);

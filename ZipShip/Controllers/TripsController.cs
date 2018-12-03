@@ -11,16 +11,16 @@ namespace ZipShip.Controllers
     public class TripsController : Controller
     {
         // GET: Trips
-        public ActionResult Index(string Message)
+        public ActionResult Index()
         {
-            DBZipShipEntities1 db = new DBZipShipEntities1();
+            DBZipShipEntities db = new DBZipShipEntities();
             var list = db.Trips.ToList();
-            List<TripListViewModel> trips = new List<TripListViewModel>();
+            List<TripViewModel> trips = new List<TripViewModel>();
             foreach(var i in list)
             {
                 if(i.AddedBy != User.Identity.GetUserId())
                 {
-                    TripListViewModel t = new TripListViewModel();
+                    TripViewModel t = new TripViewModel();
                     t.Country = i.Country;
                     t.City = i.City;
                     t.Date = Convert.ToDateTime(i.Date);
@@ -31,7 +31,7 @@ namespace ZipShip.Controllers
                 }
                 
             }
-            ViewBag.Message = Message;
+            
             return View(trips);
         }
 
@@ -39,52 +39,44 @@ namespace ZipShip.Controllers
         public ActionResult Filtered()
         {
             
-            DBZipShipEntities1 db = new DBZipShipEntities1();
+            DBZipShipEntities db = new DBZipShipEntities();
             List<string> list = new List<string>();
             var trips = db.Trips.ToList();
-            string id = User.Identity.GetUserId();
             foreach(var v in trips)
             {
                 int flag = 0;
-                if (v.AddedBy != id)
+                foreach(string s in list)
                 {
-                    foreach (string s in list)
+                    if(v.Country == s)
                     {
-                        if (v.Country == s)
-                        {
-                            flag = 1;
-                        }
-
-                    }
-                    if (flag == 0)
-                    {
-                        list.Add(v.Country);
+                        flag = 1;
                     }
                 }
-                
-                
+                if(flag ==0)
+                {
+                    list.Add(v.Country);
+                }
             }
-            list.Sort();
+            
             ViewBag.list = new SelectList(list);
-            List<TripListViewModel> list2 = new List<TripListViewModel>();
+            List<TripViewModel> list2 = new List<TripViewModel>();
             return View(list2);
         }
 
-        
         // GET: Trips/Filtered
         [HttpPost]
-        public ActionResult Filtered(TripListViewModel collection)
+        public ActionResult Filtered(TripViewModel collection)
         {
             string selvalue = collection.filtertrip;
             
             //string s = selvalue.Split();
-            List<TripListViewModel> list2 = new List<TripListViewModel>();
-            DBZipShipEntities1 db = new DBZipShipEntities1();
+            List<TripViewModel> list2 = new List<TripViewModel>();
+            DBZipShipEntities db = new DBZipShipEntities();
             var trips = db.Trips.Where(x => x.Country == selvalue);
             
             foreach(var i in trips)
             {
-                TripListViewModel t = new TripListViewModel();
+                TripViewModel t = new TripViewModel();
                 t.Country = i.Country;
                 t.City = i.City;
                 t.Date = Convert.ToDateTime(i.Date);
@@ -94,32 +86,24 @@ namespace ZipShip.Controllers
             }
             List<string> list = new List<string>();
             var alltrips = db.Trips.ToList();
-            string id = User.Identity.GetUserId();
             foreach (var v in alltrips)
             {
                 int flag = 0;
-                if (v.AddedBy != id)
+                foreach (string s in list)
                 {
-                    foreach (string s in list)
+                    if (v.Country == s)
                     {
-                        if (v.Country == s)
-                        {
-                            flag = 1;
-                        }
-
-                    }
-                    if (flag == 0)
-                    {
-                        list.Add(v.Country);
+                        flag = 1;
                     }
                 }
-
-               
+                if (flag == 0)
+                {
+                    list.Add(v.Country);
+                }
             }
-            list.Sort();
+
             ViewBag.list = new SelectList(list);
             
-
             return View(list2);
         }
 
@@ -142,7 +126,7 @@ namespace ZipShip.Controllers
             try
             {
                 // TODO: Add insert logic here
-                DBZipShipEntities1 db = new DBZipShipEntities1();
+                DBZipShipEntities db = new DBZipShipEntities();
                 Trip trip = new Trip();
                 trip.Country = collection.Country;
                 trip.City = collection.City;
@@ -151,11 +135,9 @@ namespace ZipShip.Controllers
                 trip.AddedOn = DateTime.Now.Date;
                 db.Trips.Add(trip);
                 db.SaveChanges();
-                string id = User.Identity.GetUserId();
-                var user = db.AspNetUsers.Where(x => x.Id == id).First();
+                
 
-                string message = "Your Trip is Added Successfully " + user.Name;
-                return RedirectToAction("Index", "Trips", new { Message = message });
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -164,10 +146,11 @@ namespace ZipShip.Controllers
         }
 
         // GET: Trips/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
-            DBZipShipEntities1 db = new DBZipShipEntities1();
-            var det = db.Trips.Where(x => x.Id == id).First();
+            DBZipShipEntities db = new DBZipShipEntities();
+            string id = User.Identity.GetUserId();
+            var det = db.Trips.Where(x => x.AddedBy == id).First();
             TripViewModel t = new TripViewModel();
             t.Country = det.Country;
             t.City = det.City;
@@ -178,23 +161,19 @@ namespace ZipShip.Controllers
 
         // POST: Trips/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id,TripViewModel collection)
+        public ActionResult Edit(TripViewModel collection)
         {
             try
             {
                 // TODO: Add update logic here
-                DBZipShipEntities1 db = new DBZipShipEntities1();
-                var det = db.Trips.Where(x => x.Id == id).First();
+                DBZipShipEntities db = new DBZipShipEntities();
+                string id = User.Identity.GetUserId();
+                var det = db.Trips.Where(x => x.AddedBy == id).First();
                 det.Country = collection.Country;
                 det.City = collection.City;
                 det.Date = Convert.ToDateTime(collection.Date);
                 db.SaveChanges();
-                string iduser = User.Identity.GetUserId();
-                var user = db.AspNetUsers.Where(x => x.Id == iduser).First();
-
-                string message = "Your Trip is Updated Successfully " + user.Name;
-                return RedirectToAction("Index", "Trips", new { Message = message });
+                return RedirectToAction("Index");
             }
             catch
             {
@@ -203,53 +182,29 @@ namespace ZipShip.Controllers
         }
 
         // GET: Trips/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete()
         {
             return View();
         }
 
         // POST: Trips/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id,TripViewModel collection)
+        public ActionResult Delete(TripViewModel collection)
         {
             try
             {
                 // TODO: Add delete logic here
-                DBZipShipEntities1 db = new DBZipShipEntities1();
-                var det = db.Trips.Where(x => x.Id == id).First();
+                DBZipShipEntities db = new DBZipShipEntities();
+                string id = User.Identity.GetUserId();
+                var det = db.Trips.Where(x => x.AddedBy == id).First();
                 db.Entry(det).State = System.Data.Entity.EntityState.Deleted;
                 db.SaveChanges();
-                string iduser = User.Identity.GetUserId();
-                var user = db.AspNetUsers.Where(x => x.Id == iduser).First();
-
-                string message = "Your Trip is Deleted Successfully " + user.Name;
-                return RedirectToAction("Index", "Trips", new { Message = message });
+                return RedirectToAction("Index");
             }
             catch
             {
                 return View();
             }
         }
-
-        // GET: Trips/Delete/5
-        public ActionResult MyTrips()
-        {
-            DBZipShipEntities1 db = new DBZipShipEntities1();
-            string id = User.Identity.GetUserId();
-            var trips = db.Trips.Where(x => x.AddedBy == id).ToList();
-            List<TripViewModel> list = new List<TripViewModel>();
-            foreach(var i in trips)
-            {
-                TripViewModel t = new TripViewModel();
-                t.Id = i.Id;
-                t.Country = i.Country;
-                t.City = i.City;
-                t.Date =Convert.ToDateTime(i.Date);
-                list.Add(t);
-            }
-            return View(list);
-        }
-
-        
     }
 }

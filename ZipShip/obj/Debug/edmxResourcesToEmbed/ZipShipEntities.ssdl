@@ -23,7 +23,6 @@
     <Property Name="ConfirmPassword" Type="nvarchar(max)" />
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Earnings" Type="int" />
-    <Property Name="ImagePath" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="AspNetRoles">
     <Key>
@@ -80,19 +79,6 @@
     <Property Name="UserName" Type="nvarchar" MaxLength="256" />
     <Property Name="ImagePath" Type="varchar(max)" />
   </EntityType>
-  <EntityType Name="CompletedOrders">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="OrderName" Type="nvarchar(max)" />
-    <Property Name="OrderCountry" Type="nvarchar(max)" />
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="TravellerName" Type="nvarchar(max)" />
-    <Property Name="ShopperName" Type="nvarchar(max)" />
-    <Property Name="ImagePath" Type="nvarchar(max)" />
-    <Property Name="TravellerId" Type="nvarchar(max)" />
-    <Property Name="ShopperId" Type="nvarchar(max)" />
-  </EntityType>
   <EntityType Name="Deals">
     <Key>
       <PropertyRef Name="id" />
@@ -113,18 +99,14 @@
     <Property Name="AddedBy" Type="nvarchar" MaxLength="128" />
     <Property Name="AddedOn" Type="date" />
     <Property Name="Status" Type="nvarchar(max)" />
-    <Property Name="ImagePath" Type="nvarchar(max)" />
-    <Property Name="Country" Type="nvarchar(max)" />
-    <Property Name="Brand" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Reviews">
     <Key>
       <PropertyRef Name="id" />
     </Key>
     <Property Name="Review" Type="nvarchar(max)" />
-    <Property Name="Name" Type="nvarchar(max)" />
+    <Property Name="AddedBy" Type="nvarchar" MaxLength="128" />
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ImagePath" Type="nvarchar(max)" />
   </EntityType>
   <EntityType Name="Trips">
     <Key>
@@ -201,7 +183,6 @@
     <EntitySet Name="AspNetUserLogins" EntityType="Self.AspNetUserLogins" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUserRoles" EntityType="Self.AspNetUserRoles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="CompletedOrders" EntityType="Self.CompletedOrders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Deals" EntityType="Self.Deals" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />

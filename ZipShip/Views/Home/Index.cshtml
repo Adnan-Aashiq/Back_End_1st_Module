@@ -5,28 +5,24 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
     <style>
-
+        
         html {
             box-sizing: border-box;
         }
 
         a:hover {
-            background-color: transparent;
-            color: purple;
-            border-color: purple;
+            background-color:transparent;
+            color:purple;
+            border-color:purple;
         }
-
         .btn:hover {
             color: purple;
         }
-
         a {
             color: white;
             background-color: purple;
         }
-
         *, *:before, *:after {
             box-sizing: inherit;
         }
@@ -64,26 +60,13 @@
             color: black;
             text-align: center;
         }
-
-        .body {
+        .body{
+            
         }
+        
     </style>
 </head>
 <body class="text">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-
-        if (ViewBag.Message != null)
-        {
-            <script type="text/javascript">
-            window.onload = function () {
-                alert("@ViewBag.Message");
-            };
-            </script>
-        }
-    }
-
     <div>
         <img src="~/Content/Images/logo_color.png" style="height:120px;width:160px;padding-left:50px" />
         <h2 style="color:purple">Explore The World!</h2>
@@ -92,9 +75,9 @@
 
 
     <div class="form-group">
-        <a href="~/Admin/Login" class="btn" style="width:400px;height:40px"><b>Admin Login</b></a>
+        <a href="~/Admin/Login" class="btn" style="width:400px;height:40px"><b >Admin Login</b></a>
     </div>
-
+    
 
     <center><h3>Recent Completed Orders</h3></center>
     <br>
@@ -102,48 +85,48 @@
     <div class="row">
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.ordersp1" style="width:100%;height:300px">
+                <img src="~/Content/Images/o1.jpg" style="width:100%;height:300px">
                 <div class="container">
-                    <h2> @ViewBag.ordersn1 </h2>
-                    <p class="title">@ViewBag.country1</p>
-                    <p>Traveller : @ViewBag.ordersT1</p>
-                    <p>Buyer : @ViewBag.ordersS1</p>
+                    <h2> Luxury Watch </h2>
+                    <p class="title">Thailand</p>
+                    <p>Traveller : Rana Hamza</p>
+                    <p>Buyer : Fahad Hameed</p>
 
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.ordersp2" style="width:100%;height:300px">
+                <img src="~/Content/Images/o2.jpg" style="width:100%;height:300px">
                 <div class="container">
-                    <h2> @ViewBag.ordersn2 </h2>
-                    <p class="title">@ViewBag.country2</p>
-                    <p>Traveller : @ViewBag.ordersT2</p>
-                    <p>Buyer : @ViewBag.ordersS2</p>
+                    <h2> IPhone xs </h2>
+                    <p class="title">Dubai</p>
+                    <p>Traveller : Hassan Shah</p>
+                    <p>Buyer : Atif Rajpoot</p>
 
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.ordersp3" style="width:100%;height:300px">
+                <img src="~/Content/Images/o3.jpg" style="width:100%;height:300px">
                 <div class="container">
-                    <h2> @ViewBag.ordersn3 </h2>
-                    <p class="title">@ViewBag.country3</p>
-                    <p>Traveller : @ViewBag.ordersT3</p>
-                    <p>Buyer : @ViewBag.ordersS3</p>
+                    <h2> K K Donuts </h2>
+                    <p class="title">UAE</p>
+                    <p>Traveller : Nancy Fazal</p>
+                    <p>Buyer : Abdullah Tariq</p>
 
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.ordersp4" style="width:100%;height:300px">
+                <img src="~/Content/Images/o4.jpg" style="width:100%;height:300px">
                 <div class="container">
-                    <h2> @ViewBag.ordersn4 </h2>
-                    <p class="title">@ViewBag.country4</p>
-                    <p>Traveller : @ViewBag.ordersT4 </p>
-                    <p>Buyer : @ViewBag.ordersS4</p>
+                    <h2> Perfume </h2>
+                    <p class="title">Paris</p>
+                    <p>Traveller : Shiekh Shammer </p>
+                    <p>Buyer : Fatima Asad</p>
 
                 </div>
             </div>
@@ -151,30 +134,30 @@
 
     </div>
     <br />
-
     <center><h3>Reviews &amp; Feedbacks</h3></center>
     <br>
 
     <div class="row">
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.p1" style="width:100%;height:300px">
-                <div class="container" style="height:150px">
-                    <h2 style="width:20%"> @ViewBag.n1 </h2>
+                <img src="~/Content/Images/f1.jpg" style="width:100%;height:300px">
+                <div class="container">
+                    <h2> Aneela Khan </h2>
 
-                    <p style="width:20%"> @ViewBag.r1</p>
-
+                    <p>Easy to use &amp; reliable</p>
+                    <p>You guys are just Great!</p>
                     <br /><br />
                 </div>
             </div>
         </div>
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.p2" style="width:100%;height:300px">
-                <div class="container" style="height:150px">
-                    <h2 style="width:20%"> @ViewBag.n2 </h2>
+                <img src="~/Content/Images/f2.jpg" style="width:100%;height:300px">
+                <div class="container">
+                    <h2> Asad Shah </h2>
 
-                    <p style="width:20%"> @ViewBag.r2</p>
+                    <p>It has become easy now<br /> to shop anywhere</p>
+                    <p>Interface is perfect!</p>
                     <br />
 
                 </div>
@@ -182,10 +165,12 @@
         </div>
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.p3" style="width:100%;height:300px">
-                <div class="container" style="height:150px">
-                    <h2 style="width:20%"> @ViewBag.n3 </h2>
-                    <p style="width:20%"> @ViewBag.r3</p>
+                <img src="~/Content/Images/f3.jpg" style="width:100%;height:300px">
+                <div class="container">
+                    <h2> Hamza Ali </h2>
+
+                    <p>Genuinely loving this</p>
+                    <p>Take this to next level!</p>
                     <br /><br />
 
                 </div>
@@ -193,11 +178,13 @@
         </div>
         <div class="column">
             <div class="card">
-                <img src="@ViewBag.p4" style="width:100%;height:300px">
-                <div class="container" style="height:150px">
-                    <h2 style="width:20%"> @ViewBag.n4 </h2>
+                <img src="~/Content/Images/f4.jpg" style="width:100%;height:300px">
+                <div class="container">
+                    <h2> Zahid Khan </h2>
 
-                    <p style="width:20%"> @ViewBag.r4</p>
+                    <p>Creating an enviroment <br />of brotherhood</p>
+                    <p>Proud Pakistani u should<br /> be boys!</p>
+
                 </div>
             </div>
         </div>

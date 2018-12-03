@@ -8,11 +8,6 @@ namespace ZipShip.Models
 {
     public class AdminViewModel
     {
-
-        [Display(Name = "Add Image")]
-        public HttpPostedFileBase Image { get; set; }
-        [Display(Name = "Order Image")]
-        public string ImagePath { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Address { get; set; }

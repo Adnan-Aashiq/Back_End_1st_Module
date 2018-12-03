@@ -6,9 +6,7 @@
 }
 
 <head>
-    
     <style>
-        
         a:hover {
             background-color: transparent;
             color: white;
@@ -36,27 +34,32 @@
             color: white;
             background-color: purple;
         }
-
         body {
             background-image: url('/Content/Images/signup.jpg');
             position: center;
             background-size: cover;
             background-repeat: no-repeat;
         }
-
         .text {
             color: white;
         }
-
         .h1, h2, h3 {
             color: white;
         }
-
         
+
     </style>
 </head>
 <body class="text">
-    
+    @if (ViewBag.alert == "User_Added")
+    {
+        <script>
+            alertify.success('User Added');
+        </script>
+
+        ViewBag.alert = null;
+
+    }
     <h2>@ViewBag.Title.</h2>
 
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
@@ -126,7 +129,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" id="validate" class="btn" value="Register" style="width:330px;height:40px" />
+                <input type="submit" class="btn" value="Register" style="width:330px;height:40px" />
             </div>
         </div>
         <div class="form-group">

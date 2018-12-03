@@ -14,7 +14,6 @@
     <EntitySetMapping Name="Admins">
       <EntityTypeMapping TypeName="DBZipShipModel.Admin">
         <MappingFragment StoreEntitySet="Admin">
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
           <ScalarProperty Name="Earnings" ColumnName="Earnings" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Email" ColumnName="Email" />
@@ -88,9 +87,6 @@
     <EntitySetMapping Name="Orders">
       <EntityTypeMapping TypeName="DBZipShipModel.Order">
         <MappingFragment StoreEntitySet="Orders">
-          <ScalarProperty Name="Brand" ColumnName="Brand" />
-          <ScalarProperty Name="Country" ColumnName="Country" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
           <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Name" ColumnName="Name" />
@@ -105,9 +101,8 @@
     <EntitySetMapping Name="Reviews">
       <EntityTypeMapping TypeName="DBZipShipModel.Review">
         <MappingFragment StoreEntitySet="Reviews">
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Review1" ColumnName="Review" />
+          <ScalarProperty Name="AddedBy" ColumnName="AddedBy" />
           <ScalarProperty Name="id" ColumnName="id" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -132,19 +127,5 @@
         <ScalarProperty Name="Id" ColumnName="UserId" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="CompletedOrders">
-      <EntityTypeMapping TypeName="DBZipShipModel.CompletedOrder">
-        <MappingFragment StoreEntitySet="CompletedOrders">
-          <ScalarProperty Name="ShopperId" ColumnName="ShopperId" />
-          <ScalarProperty Name="TravellerId" ColumnName="TravellerId" />
-          <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
-          <ScalarProperty Name="ShopperName" ColumnName="ShopperName" />
-          <ScalarProperty Name="TravellerName" ColumnName="TravellerName" />
-          <ScalarProperty Name="OrderCountry" ColumnName="OrderCountry" />
-          <ScalarProperty Name="OrderName" ColumnName="OrderName" />
-          <ScalarProperty Name="Id" ColumnName="Id" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>
